@@ -4,23 +4,55 @@
  */
 package br.com.ifba.curso.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /**
  *
  * @author almei
  */
+@Entity
 public class Curso {
+        
+    @Id
+    @GeneratedValue(strategy  = GenerationType.AUTO)
+    private Long id;
+    
+    @Column (name= "nome", nullable = false)
     private String nome;
+    
+    @Column (name= "codigo_curso", nullable = false)
     private String codigo;
+    
+    @Column (name= "carga_horaria", nullable = false)
     private int cargaHoraria;
+    
+    @Column (name= "ativo")
+    private boolean ativo;
 
-    // Construtor
-    public Curso(String nome, String codigo, int cargaHoraria) {
+    public Curso() {
+    }
+    
+    
+    public Curso(Long id, String nome, String codigo, int cargaHoraria, boolean ativo) {
+        this.id = id;
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
+        this.ativo = ativo;
     }
 
-    // Getters e Setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -45,10 +77,15 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
-    // Método para exibir informações do curso
-    public void exibirInformacoes() {
-        System.out.println("Curso: " + nome);
-        System.out.println("Código: " + codigo);
-        System.out.println("Carga Horária: " + cargaHoraria + " horas");
+    public boolean isAtivo() {
+        return ativo;
     }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
+    
+  
+ 
 }

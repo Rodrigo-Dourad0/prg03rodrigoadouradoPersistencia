@@ -9,9 +9,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class CursoSave {
-
-         private final static EntityManagerFactory entityManagerFactory = 
+/**
+ *
+ * @author almei
+ */
+public class CursoDelete {
+             private final static EntityManagerFactory entityManagerFactory = 
                  Persistence.createEntityManagerFactory("prg03persistencia");
 
          private final static EntityManager entityManager
@@ -19,17 +22,22 @@ public class CursoSave {
 
     public static void main(String[] args) {
 
+        //REMOVE (DELETANDO) UM CURSO
+        
+        Curso cursoEncontrado = entityManager.find(Curso.class, 1L);
+        
+        entityManager.getTransaction().begin();
+        
+        entityManager.remove(cursoEncontrado);
+        
+        entityManager.getTransaction().commit();
+        
+        
+        //Fechando os recursos
+        
+        entityManager.close();
+        
+        entityManagerFactory.close();
 
-            Curso curso = new Curso();
-            curso.setNome("Analise e Desenvolvimento de Sistemas");
-            curso.setCodigo("ADS");
-            curso.setCargaHoraria(2);
-            curso.setAtivo(true);
-
-            entityManager.getTransaction().begin();
-            entityManager.persist(curso);
-            entityManager.getTransaction().commit();
-
-    }
-
+    }    
 }
