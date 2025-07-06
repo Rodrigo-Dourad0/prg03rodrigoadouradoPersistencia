@@ -4,9 +4,9 @@
  */
 package br.com.ifba.curso.view;
 
-import br.com.ifba.curso.dao.CursoDao;
-import br.com.ifba.curso.dao.CursoIDao;
+import br.com.ifba.curso.controller.CursoController;
 import br.com.ifba.curso.entity.Curso;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -24,6 +24,7 @@ public class CursoTela extends javax.swing.JFrame {
     public CursoTela() {
         initComponents();
         carregarCursosNaTabela();
+        getContentPane().setBackground(new Color(126, 192, 238));
     }
 
     /**
@@ -42,12 +43,14 @@ public class CursoTela extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         txtPesquisar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnAdiconar = new javax.swing.JButton();
+        btnAdicionar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jButton4.setText("jButton4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tblCursos.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 153, 255)));
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -68,6 +71,7 @@ public class CursoTela extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCursos.setSelectionForeground(new java.awt.Color(153, 255, 255));
         jScrollPane1.setViewportView(tblCursos);
 
         btnRemover.setText("Remover ");
@@ -98,12 +102,14 @@ public class CursoTela extends javax.swing.JFrame {
             }
         });
 
-        btnAdiconar.setText("Adicionar");
-        btnAdiconar.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionar.setText("➕");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdiconarActionPerformed(evt);
+                btnAdicionarActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Adicionar Curso");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,35 +117,39 @@ public class CursoTela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnAdiconar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(btnBuscar)
+                        .addGap(339, 339, 339)
+                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(93, 93, 93)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(32, 32, 32)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdiconar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,11 +177,11 @@ public class CursoTela extends javax.swing.JFrame {
             );
 
             if (confirmacao == JOptionPane.YES_OPTION) {
-                CursoDao cursoDao = new CursoDao(); // Instancia o DAO
-                Curso curso = cursoDao.findById(idCurso); // Busca o curso pelo ID
+                CursoController controller = new CursoController(); // Instancia o controller
+                Curso curso = controller.findById(idCurso); // Busca o curso pelo ID
 
                 if (curso != null) {
-                    cursoDao.delete(curso); // Remove o curso do banco de dados
+                    controller.delete(curso); // Remove o curso do banco de dados
                     JOptionPane.showMessageDialog(this, "Curso removido com sucesso!");
                     carregarCursosNaTabela(); // Atualiza a tabela
                 } else {
@@ -204,8 +214,8 @@ public class CursoTela extends javax.swing.JFrame {
        try {
            Long idCurso = Long.parseLong(idStr.trim()); // Converte o ID para Long
 
-           CursoDao cursoDao = new CursoDao(); // Instancia o DAO
-           Curso curso = cursoDao.findById(idCurso); // Busca o curso pelo ID
+          CursoController controller = new CursoController(); // Instancia o controller
+           Curso curso = controller.findById(idCurso); // Busca o curso pelo ID
 
            // Verifica se o curso foi encontrado
            if (curso == null) {
@@ -253,7 +263,7 @@ public class CursoTela extends javax.swing.JFrame {
                    curso.setCargaHoraria(novaCargaHoraria);
                    curso.setAtivo(ativo);
 
-                   cursoDao.update(curso); // Salva as alterações no banco via DAO
+                   controller.update(curso); // Salva as alterações no banco 
 
                    JOptionPane.showMessageDialog(this, "Curso atualizado com sucesso!");
                    carregarCursosNaTabela(); // Atualiza a tabela
@@ -282,7 +292,7 @@ public class CursoTela extends javax.swing.JFrame {
 
     
     
-    private void btnAdiconarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdiconarActionPerformed
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
            // Cria campos de entrada vazios
         JTextField campoNome = new JTextField();
         JTextField campoCodigo = new JTextField();
@@ -320,8 +330,8 @@ public class CursoTela extends javax.swing.JFrame {
                 curso.setCargaHoraria(cargaHoraria);
                 curso.setAtivo(true); // Curso novo já começa como ativo
 
-                CursoIDao cursoDao = new CursoDao(); // Instancia o DAO
-                cursoDao.save(curso); // Salva o curso no banco de dados
+                CursoController controller = new CursoController(); // Instancia o controller
+                controller.save(curso); // Salva o curso no banco de dados
 
                 JOptionPane.showMessageDialog(null, "Curso salvo com sucesso!");
                 carregarCursosNaTabela(); // Atualiza a tabela
@@ -335,7 +345,7 @@ public class CursoTela extends javax.swing.JFrame {
             }
         }
 
-    }//GEN-LAST:event_btnAdiconarActionPerformed
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     
     
@@ -350,8 +360,8 @@ public class CursoTela extends javax.swing.JFrame {
         }
 
         try {
-            CursoDao cursoDao = new CursoDao(); // Instancia o DAO de Curso
-            List<Curso> cursos = cursoDao.findByNome(nomeBusca); // Busca cursos pelo nome
+            CursoController controller = new CursoController(); // Instancia o controller
+            List<Curso> cursos = controller.findByNome(nomeBusca); // Busca cursos pelo nome
 
             // Limpa as linhas da tabela
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblCursos.getModel();
@@ -384,8 +394,8 @@ public class CursoTela extends javax.swing.JFrame {
     
 private void carregarCursosNaTabela() {
     try {
-        CursoDao cursoDao = new CursoDao();
-        java.util.List<Curso> cursos = cursoDao.findAll();
+        CursoController controller = new CursoController();
+        java.util.List<Curso> cursos = controller.findAll();
 
         // Limpar a tabela
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblCursos.getModel();
@@ -446,11 +456,12 @@ private void carregarCursosNaTabela() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdiconar;
+    private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCursos;
     private javax.swing.JTextField txtPesquisar;
