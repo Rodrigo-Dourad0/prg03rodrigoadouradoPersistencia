@@ -4,20 +4,22 @@
  */
 package br.com.ifba.curso.service;
 
-import br.com.ifba.curso.dao.CursoDao;
-import br.com.ifba.curso.dao.CursoIDao;
+
 import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.curso.repository.CursoRepository;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CursoService implements CursoIService {
     
-    // DAO responsável pelo acesso ao banco
-    @Autowired
-    private final CursoIDao cursoDao = new CursoDao();
+    private final CursoRepository cursoRepository;
+    
+    public CursoService(CursoRepository cursoRepository){
+        this.cursoRepository = cursoRepository;
+    }
+    
     
     // Salva um novo curso após validações
     @Override
@@ -30,7 +32,7 @@ public class CursoService implements CursoIService {
             throw new RuntimeException("Nome do curso não pode estar vazio.");
         }
 
-        return cursoDao.save(curso);
+        return cursoRepository.save(curso);
     }
     
     // Atualiza um curso existente após validar ID
@@ -40,7 +42,7 @@ public class CursoService implements CursoIService {
             throw new RuntimeException("Curso inválido para atualização.");
         }
 
-        return cursoDao.update(curso);
+        return cursoRepository.save(curso);
     }
     
     // Remove um curso após validar ID
@@ -50,32 +52,31 @@ public class CursoService implements CursoIService {
             throw new RuntimeException("Curso inválido para exclusão.");
         }
 
-        cursoDao.delete(curso);
+        cursoRepository.delete(curso);
     }
     
     // Retorna todos os cursos
     @Override
     public List<Curso> findAll() throws RuntimeException {
-        return cursoDao.findAll();
+        return cursoRepository.findAll();
     }
     
     // Busca curso por ID com validação
-    @Override
+     @Override
     public Curso findById(Long id) throws RuntimeException {
         if (id == null) {
             throw new RuntimeException("ID inválido.");
         }
-
-        return cursoDao.findById(id);
+        return cursoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Curso não encontrado."));
     }
-    
+
     // Busca cursos pelo nome com validação
     @Override
     public List<Curso> findByNome(String nome) throws RuntimeException {
         if (StringUtil.isEmpty(nome)) {
             throw new RuntimeException("Nome inválido para busca.");
         }
-
-        return cursoDao.findByNome(nome);
+        return cursoRepository.findByNomeContainingIgnoreCase(nome.trim());
     }
 }

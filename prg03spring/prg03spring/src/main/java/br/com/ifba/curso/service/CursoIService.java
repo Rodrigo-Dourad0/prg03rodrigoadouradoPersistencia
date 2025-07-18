@@ -23,6 +23,6 @@ public interface CursoIService {
     
     Curso findById(Long id);
     
-    List<Curso> findByNome(String nome);
+    List<Curso> findByNome(String nome); // ← Correto
     
 }

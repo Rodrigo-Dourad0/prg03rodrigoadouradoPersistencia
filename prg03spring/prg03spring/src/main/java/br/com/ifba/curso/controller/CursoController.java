@@ -19,7 +19,7 @@ import org.springframework.stereotype.Controller;
 public class CursoController implements CursoIController {
     
     @Autowired
-    private final CursoIService cursoIService = new CursoService();
+    private CursoIService cursoIService;
     
     @Override 
     public List<Curso> findAll() throws RuntimeException{
@@ -46,9 +46,10 @@ public class CursoController implements CursoIController {
         return cursoIService.findById(id);
     }
     
-    @Override 
-    public List<Curso> findByNome(String nome)throws RuntimeException{
+    @Override
+    public List<Curso> findByNome(String nome) throws RuntimeException {
         return cursoIService.findByNome(nome);
     }
+
     
 }
