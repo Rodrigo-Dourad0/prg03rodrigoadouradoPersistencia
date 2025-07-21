@@ -8,12 +8,18 @@ import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 
 /**
  *
  * @author almei
  */
+
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class Curso extends PersistenceEntity implements Serializable {
         
     
@@ -29,54 +35,6 @@ public class Curso extends PersistenceEntity implements Serializable {
     @Column (name= "ativo")
     private boolean ativo;
 
-    public Curso() {
-    }
-    
-    
-    public Curso(String nome, String codigo, int cargaHoraria, boolean ativo) {
 
-        super();
-        this.nome = nome;
-        this.codigo = codigo;
-        this.cargaHoraria = cargaHoraria;
-        this.ativo = ativo;
-    }
-
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-    
-    
-  
- 
 }
 
